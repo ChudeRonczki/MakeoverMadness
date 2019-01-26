@@ -23,12 +23,14 @@ public class Pickable : MonoBehaviour
     private float defaultMass;
 
     private Dictionary<PlayerController, bool> liftTapped;
+    private Dictionary<PlayerController, Collider> usedPoints;
     
 
     private void Awake()
     {
         pickingUp = new List<PlayerController>();
         liftTapped = new Dictionary<PlayerController, bool>();
+        usedPoints = new Dictionary<PlayerController, Collider>();
         
         rb = GetComponent<Rigidbody>();
         
@@ -48,10 +50,11 @@ public class Pickable : MonoBehaviour
         return !pickingUp.Contains(player) && pickingUp.Count != pickUpPlayersCount;
     }
 
-    public void HandlePickedUp(PlayerController player)
+    public void HandlePickedUp(PlayerController player, Collider usedPoint)
     {
         pickingUp.Add(player);
         liftTapped.Add(player, false);
+        usedPoints.Add(player, usedPoint);
         
         if (pickingUp.Count == pickUpPlayersCount)
         {
@@ -69,6 +72,8 @@ public class Pickable : MonoBehaviour
         }
         else
         {
+            usedPoint.enabled = false;
+            usedPoint.gameObject.SetActive(false);
             rb.mass = MASSIVE_MASS;
         }
     }
@@ -77,9 +82,13 @@ public class Pickable : MonoBehaviour
     {
         pickingUp.Remove(player);
         liftTapped.Remove(player);
-        
+        usedPoints.Remove(player);
+
         foreach (var collider in pickPointsColliders)
         {
+            if (usedPoints.ContainsValue(collider))
+                continue;
+            
             collider.enabled = true;
             collider.gameObject.SetActive(true);
         }

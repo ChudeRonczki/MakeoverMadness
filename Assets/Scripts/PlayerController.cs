@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string liftButton;
     [SerializeField] private string dashButton;
     [SerializeField] private string furniturePreviewButton;
+    [SerializeField] private string lockMovementButton;
     
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
@@ -24,12 +25,12 @@ public class PlayerController : MonoBehaviour
     private float dashEndTime;
     private float dashAvailableTime;
 
-    public Collider pickableDetector;
+    public PickableDetector pickableDetector;
     public Joint pickableJoint;
 
     private Vector3 startAnchor;
     
-    [NonSerialized] public Pickable objectToPickUp;
+    
     [NonSerialized] public Pickable pickedUpObject;
     private Rigidbody rb;
 
@@ -45,8 +46,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown(pickDropButton))
         {
+            pickableDetector.RefreshOrder();
+            var objectToPickUp = pickableDetector.ObjectToPick;
             if (pickedUpObject)
             {
+                pickableDetector.Clear();
                 pickedUpObject.HandleDropped(this);
                 pickedUpObject = null;
                 Destroy(pickableJoint);
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour
             else if (objectToPickUp && objectToPickUp.CanPickUp(this))
             {
                 pickedUpObject = objectToPickUp;
-                objectToPickUp.HandlePickedUp(this);
+                objectToPickUp.HandlePickedUp(this, pickableDetector.PickupPoint);
                 objectToPickUp = null;
 
                 var pickedUpObjectRb = pickedUpObject.GetComponent<Rigidbody>();
@@ -90,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
         if (moveVector.sqrMagnitude > .1f)
         {
-            rb.velocity = moveVector * movementSpeed * CurrentDashMultiplier;
+            rb.velocity = Input.GetButton(lockMovementButton) ? Vector3.zero : moveVector * movementSpeed * CurrentDashMultiplier;
             float angularVelocityY = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
             rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
 
