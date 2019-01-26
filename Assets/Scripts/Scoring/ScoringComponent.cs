@@ -14,6 +14,7 @@ public class ScoringComponent : MonoBehaviour
     
     public int ID;
     public SymmetryType Symmetry;
+    public Vector2 GridSize;
 
     public float DistanceScore;
     public float AngleScore;

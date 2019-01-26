@@ -182,6 +182,16 @@ PrefabInstance:
       propertyPath: Symmetry
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3702476515806212517, guid: 01fce0061687b1b4ab82270b137cbc9c,
+        type: 3}
+      propertyPath: GridSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702476515806212517, guid: 01fce0061687b1b4ab82270b137cbc9c,
+        type: 3}
+      propertyPath: GridSize.y
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01fce0061687b1b4ab82270b137cbc9c, type: 3}
 --- !u!135 &7288163703801322638 stripped

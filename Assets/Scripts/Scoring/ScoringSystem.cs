@@ -50,6 +50,6 @@ public class ScoringSystem : MonoBehaviour
             TotalScore += BestScore;
         }
 
-        return TotalScore;
+        return Mathf.Sqrt(TotalScore);    // Fake stuff
     }
 }

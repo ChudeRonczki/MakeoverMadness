@@ -18,10 +18,18 @@ public class LevelManager : MonoBehaviour
     private List<ScoringComponent> FurnitureLocations = new List<ScoringComponent>();
     private int[,] LevelGrid;
 
+    public Vector2 EmptyFrom;
+    public Vector2 EmptyTo;
+    
+    public Vector2 StartingFrom;
+    public Vector2 StartingTo;
+
     public List<LayoutComponent> BigLayouts;
     public List<LayoutComponent> MediumLayouts;
     public List<LayoutComponent> SmallLayouts;
+    public List<RoomConfig> Rooms;
     private PlayerController[] Players;
+
 
     private void Awake()
     {
@@ -130,6 +138,14 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        for (int x = (int)EmptyFrom.x; x < (int)EmptyTo.x; x++)
+        {
+            for (int z = (int)EmptyFrom.y; z < (int)EmptyTo.y; z++)
+            {
+                LevelGrid[x, z] = 1;
+            }
+        }
+        
         foreach (var e in LayoutSpaceObjects)
         {
             int x = Mathf.RoundToInt(e.transform.position.x);
@@ -140,6 +156,14 @@ public class LevelManager : MonoBehaviour
             }
             
             e.SetActive(false);
+        }
+        
+        for (int x = (int)StartingFrom.x; x < (int)StartingTo.x; x++)
+        {
+            for (int z = (int)StartingFrom.y; z < (int)StartingTo.y; z++)
+            {
+                LevelGrid[x, z] = 2;
+            }
         }
         
         foreach (var e in StartingSpaceObjects)
@@ -165,8 +189,11 @@ public class LevelManager : MonoBehaviour
             }
         }*/
         
-        ShuffleLayouts();
-        PlaceLayouts();
+        //ShuffleLayouts();
+        //PlaceLayouts();
+
+        ApplyRooms();
+        
         PrepareRenderTexture();
 
         /*string s = "";
@@ -235,6 +262,38 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void ApplyRooms()
+    {
+        foreach (var room in Rooms)
+        {
+            var Variants = room.Variants.ToArray();
+            ApplyRandomRoomVariant(Variants);
+        }
+    }
+    
+    private void ApplyRandomRoomVariant(GameObject[] RoomVariants)
+    {
+        var Room = RoomVariants[Random.Range(0, RoomVariants.Length)];
+        Room.SetActive(true);
+        var ScoringComps2 = DuplicateRoom(Room);
+        
+        ScoringComponent[] ScoringComps = Room.GetComponentsInChildren<ScoringComponent>();
+        foreach (var comp in ScoringComps)
+        {
+            TargetLocations.Add(comp);
+            var Pickable = comp.GetComponent<Pickable>();
+            foreach (var pickPointsCollider in Pickable.pickPointsColliders)
+            {
+                pickPointsCollider.GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
+        
+        foreach (var comp in ScoringComps2)
+        {
+            FurnitureLocations.Add(comp);
+        }
+    }
+    
     private bool TryApplyLayout(LayoutComponent Layout)
     {
         if (CheckLayoutFit(Layout, 1))
@@ -314,6 +373,46 @@ public class LevelManager : MonoBehaviour
         return Comp;
     }
 
+    private ScoringComponent[] DuplicateRoom(GameObject room)
+    {
+        var children = room.GetComponentsInChildren<ScoringComponent>();
+        ScoringComponent[] scorings = new ScoringComponent[children.Length];
+        for(int s = 0; s < children.Length; s++)
+        {
+            var child = children[s];
+            var Duplicate = Instantiate(child.gameObject, Vector3.zero, Quaternion.identity);
+            Duplicate.transform.localScale = Vector3.one;
+            scorings[s] = Duplicate.GetComponent<ScoringComponent>();
+
+            if (s % 3 > 0)
+            {
+                Duplicate.transform.position = child.transform.position;
+                Duplicate.transform.rotation = child.transform.rotation;
+            }
+            else
+            {
+                for (int i = 0; i < SizeX; i++)
+                {
+                    for (int j = 0; j < SizeZ; j++)
+                    {
+                        if (CanPlaceDuplicate(i, j,
+                            Mathf.RoundToInt(child.GridSize.x),
+                            Mathf.RoundToInt(child.GridSize.y)))
+                        {
+                            Vector2 offset = (child.GridSize + Vector2.one) * 0.5f;
+                        
+                            Duplicate.transform.position = new Vector3(i + offset.x, 0f, j + offset.y);
+                            i = SizeX;
+                            j = SizeZ;
+                        }
+                    }
+                }
+            }
+        }
+
+        return scorings;
+    }
+    
     private bool CanPlaceDuplicate(int x, int z, int rx, int rz)
     {
         for (int i = x; i < x + rx; i++)
