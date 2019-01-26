@@ -195,7 +195,7 @@ MonoBehaviour:
   lockMovementButton: LockMovement
   horizontalRightAxis: HorizontalRight
   verticalRightAxis: VerticalRight
-  movementSpeed: 8
+  movementSpeed: 4
   rotationSpeed: 720
   dashSpeedMultiplier: 6
   dashTime: 0.15
