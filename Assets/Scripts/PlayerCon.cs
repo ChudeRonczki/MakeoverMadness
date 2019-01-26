@@ -33,13 +33,11 @@ public class PlayerCon : MonoBehaviour
     {
         if (Mathf.Abs(_lastMoveVector.sqrMagnitude) > .1f)
         {
-            _lastLookRotation = Quaternion.LookRotation(_lastMoveVector);
             _rb.velocity = _lastMoveVector * moveSpeed;
         }
         else
         {
             _rb.velocity = Vector3.zero;
-            _lastLookRotation = Quaternion.Lerp(_lastLookRotation, transform.rotation, 0.5f);
         }
         
         float angularVelocityY = Vector3.SignedAngle(transform.forward, _lastMoveVector, Vector3.up);
