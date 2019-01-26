@@ -18,12 +18,7 @@ public class PlayerController : MonoBehaviour
     public Collider pickableDetector;
     public Joint pickableJoint;
 
-    public float maxLift;
-    public float perTapLift;
-    public float liftFallSpeed;
     private Vector3 startAnchor;
-    private float currentLift;
-    private bool liftTapped;
     
     [NonSerialized] public Pickable objectToPickUp;
     [NonSerialized] public Pickable pickedUpObject;
@@ -42,10 +37,16 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown(pickDropButton))
         {
-            if (objectToPickUp)
+            if (pickedUpObject)
+            {
+                pickedUpObject.HandleDropped(this);
+                pickedUpObject = null;
+                Destroy(pickableJoint);
+            }
+            else if (objectToPickUp && objectToPickUp.CanPickUp(this))
             {
                 pickedUpObject = objectToPickUp;
-                objectToPickUp.HandlePickedUp();
+                objectToPickUp.HandlePickedUp(this);
                 objectToPickUp = null;
 
                 var pickedUpObjectRb = pickedUpObject.GetComponent<Rigidbody>();
@@ -54,16 +55,10 @@ public class PlayerController : MonoBehaviour
                 startAnchor = pickableJoint.anchor;
                 pickableJoint.autoConfigureConnectedAnchor = false;
             }
-            else if (pickedUpObject)
-            {
-                pickedUpObject.HandleDropped();
-                pickedUpObject = null;
-                Destroy(pickableJoint);
-            }
         }
 
-        if (Input.GetButtonDown(liftButton))
-            liftTapped = true;
+        if (Input.GetButtonDown(liftButton) && pickedUpObject)
+            pickedUpObject.HandleLiftTapped(this);
     }
 
     void FixedUpdate()
@@ -83,28 +78,13 @@ public class PlayerController : MonoBehaviour
 
         lastMoveVector = moveVector;
 
-        if (pickableJoint)
-            UpdateLift();
-
 //        rb.AddForce(moveVector * movementSpeed, ForceMode.Acceleration);
 //        var angle = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
 //        rb.AddTorque(0f, rotationSpeed * angle * angle * Mathf.Sign(angle), 0f, ForceMode.Acceleration);
     }
 
-    private void UpdateLift()
+    public void UpdateLift(float currentLift)
     {
-        if (liftTapped)
-        {
-            currentLift = Mathf.Min(maxLift, currentLift + perTapLift);
-            liftTapped = false;
-        }
-        else if (currentLift > 0f)
-        {
-            currentLift = Mathf.Max(0f, currentLift - liftFallSpeed * Time.fixedDeltaTime);
-        }
-        else
-            return;
-
         pickableJoint.anchor = startAnchor + new Vector3(0f, currentLift, 0f);
     }
 }
