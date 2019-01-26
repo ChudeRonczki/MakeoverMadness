@@ -160,7 +160,7 @@ PrefabInstance:
     - target: {fileID: 3702476515806212517, guid: 01fce0061687b1b4ab82270b137cbc9c,
         type: 3}
       propertyPath: Symmetry
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01fce0061687b1b4ab82270b137cbc9c, type: 3}

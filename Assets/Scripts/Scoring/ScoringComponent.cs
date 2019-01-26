@@ -8,7 +8,8 @@ public class ScoringComponent : MonoBehaviour
     {
         None = 0,
         OneAxis,
-        TwoAxis
+        TwoAxis,
+        IgnoreRotation
     }
     
     public int ID;
@@ -34,6 +35,10 @@ public class ScoringComponent : MonoBehaviour
         else if (Symmetry == SymmetryType.TwoAxis)
         {
             angle = Mathf.Min(angle, 180f - angle, Mathf.Abs(90f - angle));
+        }
+        else if (Symmetry == SymmetryType.IgnoreRotation)
+        {
+            angle = 0f;
         }
 
         return angle;

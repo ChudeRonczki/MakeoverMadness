@@ -72,6 +72,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300012, guid: c8561712fd39fa5428c944aac284c148, type: 3}
+    - target: {fileID: 7288163704220275985, guid: 69103f0c2fd58df40ab87beb7fe7c87e,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7288163704220275985, guid: 69103f0c2fd58df40ab87beb7fe7c87e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0908139ed59bc4c40a64dd832880ab74, type: 2}
     - target: {fileID: 7288163704220275980, guid: 69103f0c2fd58df40ab87beb7fe7c87e,
         type: 3}
       propertyPath: pickPointsColliders.Array.data[0]

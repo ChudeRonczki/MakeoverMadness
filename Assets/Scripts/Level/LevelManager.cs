@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -10,7 +11,8 @@ public class LevelManager : MonoBehaviour
     public int SizeX = 20, SizeZ = 20;
     public int BigAmount = 1, MediumAmount = 1, SmallAmount = 1;
     public RenderTexture CameraRenderTexture;
-    
+    public TMP_Text BigText;
+    public TMP_Text CountdownText;
     
     private List<ScoringComponent> TargetLocations = new List<ScoringComponent>();
     private List<ScoringComponent> FurnitureLocations = new List<ScoringComponent>();
@@ -32,18 +34,58 @@ public class LevelManager : MonoBehaviour
         
         GenerateLevel();
 
-        //StartCoroutine(StartSequence());
+        StartCoroutine(StartSequence());
     }
 
     IEnumerator StartSequence()
     {
         EnableInput(false);
 
-        yield return new WaitForSeconds(1f);
+        float time = 3.9f;
+
+        while (time > 1f)
+        {
+            time -= Time.deltaTime;
+            int number = (int)time;
+
+            if (number > 0)
+            {
+                BigText.text = "" + number;
+                BigText.transform.localScale = Vector3.one * (time % 1f);
+            }
+
+            yield return null;
+        }
         
+        BigText.text = "GO!";
+        BigText.transform.localScale = Vector3.one;
         EnableInput(true);
+        
+        while (time > 0f)
+        {
+            time -= Time.deltaTime;
+            yield return null;
+        }
+        
+        BigText.text = "";
+
+        int seconds = 60;
+        while (seconds > 0)
+        {
+            CountdownText.text = "" + seconds;
+            seconds--;
+            yield return new WaitForSeconds(1f);
+        }
+        
+        EnableInput(false);
+        CountdownText.text = "";
+        
+        int percent = Mathf.RoundToInt(100f * ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations)
+                      / TargetLocations.Count);
+        
+        BigText.text = "TIME'S UP!\n\nSCORE: " + percent + "% !";
     }
-    
+
     public void Update()
     {
         if (Input.GetKeyUp(KeyCode.P))
