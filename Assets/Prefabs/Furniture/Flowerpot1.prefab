@@ -97,6 +97,16 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6226347413201402688, guid: 01fce0061687b1b4ab82270b137cbc9c,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6226347413201402688, guid: 01fce0061687b1b4ab82270b137cbc9c,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 6226347413201402718, guid: 01fce0061687b1b4ab82270b137cbc9c,
         type: 3}
       propertyPath: pickPointsColliders.Array.data[0]
