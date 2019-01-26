@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2558,6 +2558,16 @@ PrefabInstance:
         type: 3}
       propertyPath: lockMovementButton
       value: LockMovement2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641999994184590895, guid: 717e8d9282ba9c740a75d630ab56de2f,
+        type: 3}
+      propertyPath: horizontalRightAxis
+      value: HorizontalRight2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641999994184590895, guid: 717e8d9282ba9c740a75d630ab56de2f,
+        type: 3}
+      propertyPath: verticalRightAxis
+      value: VerticalRight2
       objectReference: {fileID: 0}
     - target: {fileID: 6246878096575362558, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}

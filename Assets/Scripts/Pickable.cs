@@ -43,6 +43,14 @@ public class Pickable : MonoBehaviour
         drag = rb.drag;
         angularDrag = rb.angularDrag;
         defaultMass = rb.mass;
+
+        if (pickUpPlayersCount == 1)
+        {
+            foreach (var point in pickPointsColliders)
+            {
+                point.GetComponent<MeshRenderer>().enabled = false;
+            }
+        }
     }
 
     public bool CanPickUp(PlayerController player)
@@ -61,7 +69,7 @@ public class Pickable : MonoBehaviour
             foreach (var collider in pickPointsColliders)
             {
                 collider.enabled = false;
-                collider.gameObject.SetActive(false);
+                collider.GetComponent<MeshRenderer>().enabled = false;
 
             }
             
@@ -73,7 +81,7 @@ public class Pickable : MonoBehaviour
         else
         {
             usedPoint.enabled = false;
-            usedPoint.gameObject.SetActive(false);
+            usedPoint.GetComponent<MeshRenderer>().enabled = false;
             rb.mass = MASSIVE_MASS;
         }
     }
@@ -90,7 +98,8 @@ public class Pickable : MonoBehaviour
                 continue;
             
             collider.enabled = true;
-            collider.gameObject.SetActive(true);
+            if (pickUpPlayersCount > 1)
+                collider.GetComponent<MeshRenderer>().enabled = true;
         }
 
         rb.drag = drag;

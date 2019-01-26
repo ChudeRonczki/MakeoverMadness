@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private const float STICK_DEADZONE = .1f;
+    
     [SerializeField] private string horizontalAxis;
     [SerializeField] private string verticalAxis;
     [SerializeField] private string pickDropButton;
@@ -14,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string dashButton;
     [SerializeField] private string furniturePreviewButton;
     [SerializeField] private string lockMovementButton;
+    [SerializeField] private string horizontalRightAxis;
+    [SerializeField] private string verticalRightAxis;
     
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
@@ -78,6 +82,7 @@ public class PlayerController : MonoBehaviour
                 pickableJoint.connectedBody = pickedUpObjectRb;
                 startAnchor = pickableJoint.anchor;
                 pickableJoint.autoConfigureConnectedAnchor = false;
+                m_animator.SetFloat(m_holdingUpParam, 0f);
             }
         }
 
@@ -102,23 +107,35 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        var moveVector = new Vector3(Input.GetAxis(horizontalAxis), 0, Input.GetAxis(verticalAxis));
+        var moveVector = new Vector3(Input.GetAxis(horizontalAxis), 0f, Input.GetAxis(verticalAxis));
+        var rotateVector = new Vector3(Input.GetAxis(horizontalRightAxis), 0f, Input.GetAxis(verticalRightAxis));
 
-        if (moveVector.sqrMagnitude > .1f)
+        if (moveVector.sqrMagnitude > STICK_DEADZONE)
         {
             rb.velocity = Input.GetButton(lockMovementButton) ? Vector3.zero : moveVector * movementSpeed * CurrentDashMultiplier;
-            float angularVelocityY = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
-            rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
 
             m_animator.SetFloat(m_forwardSpeedParam, Vector3.Dot(rb.velocity, transform.forward));
             m_animator.SetFloat(m_sidewaysSpeedParam, Vector3.Dot(rb.velocity, transform.right));
         }
         else
         {
-	        rb.velocity = rb.angularVelocity = Vector3.zero;
+	        rb.velocity = Vector3.zero;
 	        
 	        m_animator.SetFloat(m_forwardSpeedParam, 0);
 	        m_animator.SetFloat(m_sidewaysSpeedParam, 0);
+        }
+
+        if (moveVector.sqrMagnitude > STICK_DEADZONE && rotateVector.sqrMagnitude <= STICK_DEADZONE)
+            rotateVector = moveVector;
+
+        if (rotateVector.sqrMagnitude > STICK_DEADZONE)
+        {
+            float angularVelocityY = Vector3.SignedAngle(transform.forward, rotateVector, Vector3.up);
+            rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
+        }
+        else
+        {
+            rb.angularVelocity = Vector3.zero;
         }
 
 //        rb.AddForce(moveVector * movementSpeed, ForceMode.Acceleration);
@@ -139,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateLift(float currentLift)
     {
+        m_animator.SetFloat(m_holdingUpParam, currentLift / pickedUpObject.maxLift);
         pickableJoint.anchor = startAnchor + new Vector3(0f, currentLift, 0f);
     }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9a07a409a29862745b14d2a5a31b8ecd
+guid: e079a85d576da7c4bba13891d8dba024
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -41,9 +41,9 @@ ModelImporter:
     100070: LegTarget_R
     100072: LegTarget_R_end
     100074: Neck
-    100076: //RootNode
-    100078: Shin_L
-    100080: Shin_R
+    100076: Shin_L
+    100078: Shin_R
+    100080: //RootNode
     100082: Spine
     100084: Spine.001
     100086: Thumb2_L
@@ -95,9 +95,9 @@ ModelImporter:
     400070: LegTarget_R
     400072: LegTarget_R_end
     400074: Neck
-    400076: //RootNode
-    400078: Shin_L
-    400080: Shin_R
+    400076: Shin_L
+    400078: Shin_R
+    400080: //RootNode
     400082: Spine
     400084: Spine.001
     400086: Thumb2_L
@@ -111,7 +111,7 @@ ModelImporter:
     400102: Tigh_L
     400104: Tigh_R
     400106: Armature
-    7400000: RunHoldUp
+    7400000: Sideways
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -142,10 +142,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RunHoldUp
+      name: Sideways
       takeName: Armature|anim
-      firstFrame: 580
-      lastFrame: 620
+      firstFrame: 720
+      lastFrame: 760
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
