@@ -9,11 +9,12 @@ public class LevelManager : MonoBehaviour
 
     public int SizeX = 20, SizeZ = 20;
     public int BigAmount = 1, MediumAmount = 1, SmallAmount = 1;
-    public GameObject TempCube;
+    public RenderTexture CameraRenderTexture;
     
     
-    private List<ScoringComponent> TargetLocations;
-    private int[,] EmptySpaces;
+    private List<ScoringComponent> TargetLocations = new List<ScoringComponent>();
+    private List<ScoringComponent> FurnitureLocations = new List<ScoringComponent>();
+    private int[,] LevelGrid;
 
     public List<LayoutComponent> BigLayouts;
     public List<LayoutComponent> MediumLayouts;
@@ -31,25 +32,41 @@ public class LevelManager : MonoBehaviour
 
     public void GenerateLevel(int seed = 0)
     {
-        GameObject[] EmptySpaceObjects = GameObject.FindGameObjectsWithTag("EmptySpace");
+        GameObject[] LayoutSpaceObjects = GameObject.FindGameObjectsWithTag("EmptySpace");
+        GameObject[] StartingSpaceObjects = GameObject.FindGameObjectsWithTag("StartingSpace");
         
-        EmptySpaces = new int[SizeX, SizeZ];
+        LevelGrid = new int[SizeX, SizeZ];
+        LevelGrid = new int[SizeX, SizeZ];
         for (int i = 0; i < SizeX; i++)
         {
             for (int j = 0; j < SizeZ; j++)
             {
-                EmptySpaces[i, j] = 0;
+                LevelGrid[i, j] = 0;
             }
         }
 
-        foreach (var e in EmptySpaceObjects)
+        foreach (var e in LayoutSpaceObjects)
         {
             int x = Mathf.RoundToInt(e.transform.position.x);
             int z = Mathf.RoundToInt(e.transform.position.z);
             if (x >= 0 && x < SizeX && z >= 0 && z < SizeZ)
             {
-                EmptySpaces[x, z] = 1;
+                LevelGrid[x, z] = 1;
             }
+            
+            e.SetActive(false);
+        }
+        
+        foreach (var e in StartingSpaceObjects)
+        {
+            int x = Mathf.RoundToInt(e.transform.position.x);
+            int z = Mathf.RoundToInt(e.transform.position.z);
+            if (x >= 0 && x < SizeX && z >= 0 && z < SizeZ)
+            {
+                LevelGrid[x, z] = 2;
+            }
+            
+            e.SetActive(false);
         }
         
         /*for (int i = 0; i < SizeX; i++)
@@ -63,9 +80,20 @@ public class LevelManager : MonoBehaviour
             }
         }*/
         
-        TargetLocations = new List<ScoringComponent>();
         ShuffleLayouts();
         PlaceLayouts();
+        PrepareRenderTexture();
+
+        /*string s = "";
+        for (int i = 0; i < SizeZ; i++)
+        {
+            for (int j = 0; j < SizeX; j++)
+            {
+                s += LevelGrid[j,i].ToString();
+            }
+            s += "\n";
+        }
+        Debug.Log(s);*/
     }
 
     private void ShuffleLayouts()
@@ -99,63 +127,67 @@ public class LevelManager : MonoBehaviour
     {
         for (int i = 0, placedBig = 0; i < BigLayouts.Count && placedBig < BigAmount; i++)
         {
-            var Layout = BigLayouts[i];
-            if (CheckLayoutFit(Layout))
+            if (TryApplyLayout(BigLayouts[i]))
             {
-                Layout.gameObject.SetActive(true);
-                ApplyLayoutBounds(Layout);
                 placedBig++;
-                
-                ScoringComponent[] ScoringComps = Layout.GetComponentsInChildren<ScoringComponent>();
-                foreach (var comp in ScoringComps)
-                {
-                    TargetLocations.Add(comp);
-                }
             }
         }
         
         for (int i = 0, placedMedium = 0; i < MediumLayouts.Count && placedMedium < MediumAmount; i++)
         {
-            var Layout = MediumLayouts[i];
-            if (CheckLayoutFit(Layout))
+            if (TryApplyLayout(MediumLayouts[i]))
             {
-                Layout.gameObject.SetActive(true);
-                ApplyLayoutBounds(Layout);
                 placedMedium++;
-                
-                ScoringComponent[] ScoringComps = Layout.GetComponentsInChildren<ScoringComponent>();
-                foreach (var comp in ScoringComps)
-                {
-                    TargetLocations.Add(comp);
-                }
             }
         }
         
         for (int i = 0, placedSmall = 0; i < SmallLayouts.Count && placedSmall < SmallAmount; i++)
         {
-            var Layout = SmallLayouts[i];
-            if (CheckLayoutFit(Layout))
+            if (TryApplyLayout(SmallLayouts[i]))
             {
-                Layout.gameObject.SetActive(true);
-                ApplyLayoutBounds(Layout);
                 placedSmall++;
-                
-                ScoringComponent[] ScoringComps = Layout.GetComponentsInChildren<ScoringComponent>();
-                foreach (var comp in ScoringComps)
-                {
-                    TargetLocations.Add(comp);
-                }
             }
         }
     }
+
+    private bool TryApplyLayout(LayoutComponent Layout)
+    {
+        if (CheckLayoutFit(Layout, 1))
+        {
+            Layout.gameObject.SetActive(true);
+            ApplyLayoutBounds(Layout);
+            var Duplicate = DuplicateLayout(Layout);    
+            
+            ScoringComponent[] ScoringComps = Layout.GetComponentsInChildren<ScoringComponent>();
+            foreach (var comp in ScoringComps)
+            {
+                TargetLocations.Add(comp);
+                var Pickable = comp.GetComponent<Pickable>();
+                foreach (var pickPointsCollider in Pickable.pickPointsColliders)
+                {
+                    pickPointsCollider.GetComponent<MeshRenderer>().enabled = false;
+                }
+            }
+            
+            var ScoringComps2 = Duplicate.GetComponentsInChildren<ScoringComponent>();
+            foreach (var comp in ScoringComps2)
+            {
+                FurnitureLocations.Add(comp);
+            }
+
+            return true;
+        }
+        
+        return false;
+    }
     
-    private bool CheckLayoutFit(LayoutComponent Layout)
+    private bool CheckLayoutFit(LayoutComponent Layout, int GridLayer)
     {
         for (int x = Layout.FromX; x < Layout.ToX; x++)
         {
             for (int z = Layout.FromZ; z < Layout.ToZ; z++)
             {
-                if (EmptySpaces[x, z] != 1)
+                if (LevelGrid[x, z] != GridLayer)
                     return false;
             }
         }
@@ -169,8 +201,74 @@ public class LevelManager : MonoBehaviour
         {
             for (int z = Layout.OccFromZ; z <= Layout.OccToZ; z++)
             {
-                EmptySpaces[x, z] = 0;
+                LevelGrid[x, z] = 0;
             }
+        }
+    }
+
+    private LayoutComponent DuplicateLayout(LayoutComponent Layout)
+    {
+        var Duplicate = Instantiate(Layout.gameObject, Vector3.zero, Quaternion.identity);
+        Duplicate.transform.localScale = Vector3.one;
+        var Comp = Duplicate.GetComponent<LayoutComponent>();
+        
+        for (int i = 0; i < SizeX; i++)
+        {
+            for (int j = 0; j < SizeZ; j++)
+            {
+                if (CanPlaceDuplicate(i, j,
+                    Mathf.RoundToInt(Comp.RequiredSpace.x),
+                    Mathf.RoundToInt(Comp.RequiredSpace.y)))
+                {
+                    Duplicate.transform.position = new Vector3(i, 0f, j);
+                    return Comp;
+                }
+            }
+        }
+
+        return Comp;
+    }
+
+    private bool CanPlaceDuplicate(int x, int z, int rx, int rz)
+    {
+        for (int i = x; i < x + rx; i++)
+        {
+            for (int j = z; j < z + rz; j++)
+            {
+                if (LevelGrid[i, j] != 2)
+                    return false;
+            }
+        }
+        
+        for (int i = x; i < x + rx; i++)
+        {
+            for (int j = z; j < z + rz; j++)
+            {
+                LevelGrid[i, j] = 0;
+            }
+        }
+
+        return true;
+    }
+
+    void PrepareRenderTexture()
+    {
+        foreach (var furnitureLocations in FurnitureLocations)
+        {
+            furnitureLocations.gameObject.SetActive(false);
+        }
+        
+        Camera.main.targetTexture = CameraRenderTexture;
+        Camera.main.Render();
+        Camera.main.targetTexture = null;
+
+        foreach (var targetLocation in TargetLocations)
+        {
+            targetLocation.gameObject.SetActive(false);
+        }
+        foreach (var furnitureLocations in FurnitureLocations)
+        {
+            furnitureLocations.gameObject.SetActive(true);
         }
     }
 }
