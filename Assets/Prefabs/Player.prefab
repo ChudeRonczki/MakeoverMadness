@@ -190,6 +190,7 @@ MonoBehaviour:
   pickDropButton: PickDrop
   liftButton: Lift
   dashButton: Dash
+  furniturePreviewButton: FurniturePreview
   movementSpeed: 8
   rotationSpeed: 720
   dashSpeedMultiplier: 6

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string pickDropButton;
     [SerializeField] private string liftButton;
     [SerializeField] private string dashButton;
+    [SerializeField] private string furniturePreviewButton;
     
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
@@ -71,6 +72,15 @@ public class PlayerController : MonoBehaviour
         {
             dashEndTime = Time.timeSinceLevelLoad + dashTime;
             dashAvailableTime = Time.timeSinceLevelLoad + dashCooldown;
+        }
+
+        if (Input.GetButtonDown(furniturePreviewButton))
+        {
+            FurniturePreview.ShowPreview(true);
+        }
+        else if (Input.GetButtonUp(furniturePreviewButton))
+        {
+            FurniturePreview.ShowPreview(false);
         }
     }
 
