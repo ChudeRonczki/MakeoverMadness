@@ -193,6 +193,8 @@ MonoBehaviour:
   dashButton: Dash
   furniturePreviewButton: FurniturePreview
   lockMovementButton: LockMovement
+  horizontalRightAxis: HorizontalRight
+  verticalRightAxis: VerticalRight
   movementSpeed: 8
   rotationSpeed: 720
   dashSpeedMultiplier: 6
