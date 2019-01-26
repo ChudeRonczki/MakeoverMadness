@@ -50,6 +50,6 @@ public class ScoringSystem : MonoBehaviour
             TotalScore += BestScore;
         }
 
-        return Mathf.Sqrt(TotalScore / TargetLocations.Count);
+        return TotalScore / TargetLocations.Count;
     }
 }
