@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
                 pickableJoint.connectedBody = pickedUpObjectRb;
                 startAnchor = pickableJoint.anchor;
                 pickableJoint.autoConfigureConnectedAnchor = false;
+                m_animator.SetFloat(m_holdingUpParam, 0f);
             }
         }
 
@@ -139,6 +140,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateLift(float currentLift)
     {
+        m_animator.SetFloat(m_holdingUpParam, currentLift / pickedUpObject.maxLift);
         pickableJoint.anchor = startAnchor + new Vector3(0f, currentLift, 0f);
     }
 }
