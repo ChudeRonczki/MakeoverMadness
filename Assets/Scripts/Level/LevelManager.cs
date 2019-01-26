@@ -19,7 +19,8 @@ public class LevelManager : MonoBehaviour
     public List<LayoutComponent> BigLayouts;
     public List<LayoutComponent> MediumLayouts;
     public List<LayoutComponent> SmallLayouts;
-    
+    private PlayerController[] Players;
+
     private void Awake()
     {
         Instance = this;
@@ -27,9 +28,51 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        CachePlayers();
+        
         GenerateLevel();
+
+        //StartCoroutine(StartSequence());
     }
 
+    IEnumerator StartSequence()
+    {
+        EnableInput(false);
+
+        yield return new WaitForSeconds(1f);
+        
+        EnableInput(true);
+    }
+    
+    public void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            float score = ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations)
+                          / TargetLocations.Count;
+
+            string result = "Score: " + score;
+            foreach (var location in TargetLocations)
+            {
+                result += "\n" + location.gameObject.name + ": ds=" + location.DistanceScore + " as=" + location.AngleScore;
+            }
+            Debug.Log(result);
+        }
+    }
+
+    public void CachePlayers()
+    {
+        Players = FindObjectsOfType<PlayerController>();
+    }
+
+    public void EnableInput(bool Enabled)
+    {
+        foreach (var player in Players)
+        {
+            player.enabled = Enabled;
+        }
+    }
+    
     public void GenerateLevel(int seed = 0)
     {
         GameObject[] LayoutSpaceObjects = GameObject.FindGameObjectsWithTag("EmptySpace");
@@ -257,6 +300,10 @@ public class LevelManager : MonoBehaviour
         {
             furnitureLocations.gameObject.SetActive(false);
         }
+        foreach (var player in Players)
+        {
+            player.GetComponent<MeshRenderer>().enabled = false;
+        }
         
         Camera.main.targetTexture = CameraRenderTexture;
         Camera.main.Render();
@@ -269,6 +316,10 @@ public class LevelManager : MonoBehaviour
         foreach (var furnitureLocations in FurnitureLocations)
         {
             furnitureLocations.gameObject.SetActive(true);
+        }
+        foreach (var player in Players)
+        {
+            player.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }
