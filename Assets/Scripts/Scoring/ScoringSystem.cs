@@ -35,9 +35,9 @@ public class ScoringSystem : MonoBehaviour
                 if (Distance > MaxDistance || Angle > MaxAngle)
                     continue;
 
-                float DistanceScore = Distance / MaxDistance;
-                float AngleScore = Angle / MaxAngle;
-                float Score = 1.0f - 0.5f * (DistanceScore + AngleScore);
+                float DistanceScore = 1f - Distance / MaxDistance;
+                float AngleScore = 1f - Angle / MaxAngle;
+                float Score = 0.5f * (DistanceScore + AngleScore);
 
                 if (BestScore < Score)
                 {
@@ -50,6 +50,6 @@ public class ScoringSystem : MonoBehaviour
             TotalScore += BestScore;
         }
 
-        return Mathf.Sqrt(TotalScore);    // Fake stuff
+        return Mathf.Sqrt(TotalScore / TargetLocations.Count);
     }
 }

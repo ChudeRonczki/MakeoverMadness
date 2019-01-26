@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
+    public int GameLengthSeconds = 60;
     public int SizeX = 20, SizeZ = 20;
     public int BigAmount = 1, MediumAmount = 1, SmallAmount = 1;
     public RenderTexture CameraRenderTexture;
@@ -29,6 +30,7 @@ public class LevelManager : MonoBehaviour
     public List<LayoutComponent> SmallLayouts;
     public List<RoomConfig> Rooms;
     private PlayerController[] Players;
+    [SerializeField] private bool UseOldSystem;
 
 
     private void Awake()
@@ -77,7 +79,7 @@ public class LevelManager : MonoBehaviour
         
         BigText.text = "";
 
-        int seconds = 60;
+        int seconds = GameLengthSeconds;
         while (seconds > 0)
         {
             CountdownText.text = "" + seconds;
@@ -88,8 +90,7 @@ public class LevelManager : MonoBehaviour
         EnableInput(false);
         CountdownText.text = "";
         
-        int percent = Mathf.RoundToInt(100f * ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations)
-                      / TargetLocations.Count);
+        int percent = Mathf.RoundToInt(100f * ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations));
         
         BigText.text = "TIME'S UP!\n\nSCORE: " + percent + "% !";
     }
@@ -98,13 +99,10 @@ public class LevelManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.P))
         {
-            float score = ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations)
-                          / TargetLocations.Count;
-
-            string result = "Score: " + score;
+            string result = "Score: " + ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations);
             foreach (var location in TargetLocations)
             {
-                result += "\n" + location.gameObject.name + ": ds=" + location.DistanceScore + " as=" + location.AngleScore;
+                result += "\n" + location.gameObject.name + ": ds=" + location.DistanceScore + " as=" + location.AngleScore + " total=" + location.Score;
             }
             Debug.Log(result);
         }
@@ -188,11 +186,16 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }*/
-        
-        //ShuffleLayouts();
-        //PlaceLayouts();
 
-        ApplyRooms();
+        if (UseOldSystem)
+        {
+            ShuffleLayouts();
+            PlaceLayouts();
+        }
+        else
+        {
+            ApplyRooms();
+        }
         
         PrepareRenderTexture();
 
