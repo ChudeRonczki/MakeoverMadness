@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
     private CharacterController characterController;
+    [SerializeField] private float pushForce;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +25,18 @@ public class PlayerController : MonoBehaviour
 
         if (Math.Abs(moveVector.sqrMagnitude) > .1f)
         {
-            characterController.Move(moveVector * Time.deltaTime * movementSpeed);
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation,
                 Quaternion.LookRotation(moveVector), rotationSpeed * Time.deltaTime);
+            
+            characterController.Move(moveVector * Time.deltaTime * movementSpeed);
         }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.rigidbody == null)
+            return;
         
-        
+        hit.rigidbody.AddForceAtPosition(pushForce * hit.moveDirection, hit.point);
     }
 }

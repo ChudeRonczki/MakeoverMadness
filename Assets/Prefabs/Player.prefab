@@ -188,6 +188,7 @@ MonoBehaviour:
   verticalAxis: Vertical
   movementSpeed: 10
   rotationSpeed: 720
+  pushForce: 500
 --- !u!143 &5952956800104527036
 CharacterController:
   m_ObjectHideFlags: 0
