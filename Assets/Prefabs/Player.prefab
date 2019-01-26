@@ -189,13 +189,14 @@ MonoBehaviour:
   verticalAxis: Vertical
   pickDropButton: PickDrop
   liftButton: Lift
-  movementSpeed: 11
+  dashButton: Dash
+  movementSpeed: 8
   rotationSpeed: 720
+  dashSpeedMultiplier: 6
+  dashTime: 0.15
+  dashCooldown: 0.5
   pickableDetector: {fileID: 0}
   pickableJoint: {fileID: 0}
-  maxLift: 2
-  perTapLift: 0.25
-  liftFallSpeed: 1
 --- !u!54 &3321401575947725197
 Rigidbody:
   m_ObjectHideFlags: 0

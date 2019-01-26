@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class WallGenerator : MonoBehaviour
@@ -12,6 +11,7 @@ public class WallGenerator : MonoBehaviour
 	}
 
 	[SerializeField] public Vector2Int m_size = new Vector2Int(3, 3);
+	[SerializeField] public float m_wallHeight = 5f;
 
 	[SerializeField] private GameObject[] m_normalWall;
 	[SerializeField] private GameObject[] m_cornerWall;
@@ -58,33 +58,33 @@ public class WallGenerator : MonoBehaviour
 				{
 					if (left) // 90 deg bend
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BR], currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BR], currentPos,
 							Quaternion.AngleAxis(-90, Vector3.up), transform);
 					}
 					else if (right && !down) // 270 deg bend
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
 							Quaternion.AngleAxis(90, Vector3.up), transform);
 					}
 					else // straight
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.BR],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.BR],  currentPos,
 							Quaternion.AngleAxis(-90, Vector3.up), transform);
 					}
 
 					if (right) // 90 deg bend
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
 							Quaternion.AngleAxis(90, Vector3.up), transform);
 					}
 					else if (left && !down) // 270 deg bend
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TR],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TR],  currentPos,
 							Quaternion.AngleAxis(-90, Vector3.up), transform);
 					}
 					else // straight
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.BL],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.BL],  currentPos,
 							Quaternion.AngleAxis(90, Vector3.up), transform);
 					}
 				}
@@ -93,33 +93,33 @@ public class WallGenerator : MonoBehaviour
 				{
 					if (right)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BR], currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BR], currentPos,
 							Quaternion.AngleAxis(90, Vector3.up), transform);
 					}
 					else if (left && !up)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
 							Quaternion.AngleAxis(-90, Vector3.up), transform);
 					}
 					else
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.TL],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.TL],  currentPos,
 							Quaternion.AngleAxis(-90, Vector3.up), transform);
 					}
 
 					if (left)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
 							Quaternion.AngleAxis(-90, Vector3.up), transform);
 					}
 					else if (right && !up)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TR], currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TR], currentPos,
 							Quaternion.AngleAxis(90, Vector3.up), transform);
 					}
 					else
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.TR], currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.TR], currentPos,
 							Quaternion.AngleAxis(90, Vector3.up), transform);
 					}
 				}
@@ -129,33 +129,33 @@ public class WallGenerator : MonoBehaviour
 				{
 					if (down)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BR],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BR],  currentPos,
 							Quaternion.AngleAxis(180, Vector3.up), transform);
 					}
 					else if (up && !right)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
 							Quaternion.AngleAxis(0, Vector3.up), transform);
 					}
 					else
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.BR],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.BR],  currentPos,
 							Quaternion.AngleAxis(-180, Vector3.up), transform);
 					}
 
 					if (up)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
 							Quaternion.AngleAxis(0, Vector3.up), transform);
 					}
 					else if (down && !right)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TR],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TR],  currentPos,
 							Quaternion.AngleAxis(180, Vector3.up), transform);
 					}
 					else
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.BL],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.BL],  currentPos,
 							Quaternion.AngleAxis(0, Vector3.up), transform);
 					}
 				}
@@ -164,38 +164,45 @@ public class WallGenerator : MonoBehaviour
 				{
 					if (up)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BR],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BR],  currentPos,
 							Quaternion.AngleAxis(0, Vector3.up), transform);
 					}
 					else if (down && !left)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TL],  currentPos,
 							Quaternion.AngleAxis(-180, Vector3.up), transform);
 					}
 					else
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.TL],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.TL],  currentPos,
 							Quaternion.AngleAxis(-180, Vector3.up), transform);
 					}
 
 					if (down)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.BL],  currentPos,
 							Quaternion.AngleAxis(-180, Vector3.up), transform);
 					}
 					else if (up && !left)
 					{
-						Instantiate(m_cornerWall[(int) ElenentIndex.TR],  currentPos,
+						InstantiateWallSegment(m_cornerWall[(int) ElenentIndex.TR],  currentPos,
 							Quaternion.AngleAxis(0, Vector3.up), transform);
 					}
 					else
 					{
-						Instantiate(m_normalWall[(int) ElenentIndex.TR],  currentPos,
+						InstantiateWallSegment(m_normalWall[(int) ElenentIndex.TR],  currentPos,
 							Quaternion.AngleAxis(0, Vector3.up), transform);
 					}
 				}
 			}
 		}
+	}
+
+	void InstantiateWallSegment(GameObject template, Vector3 position, Quaternion rotation, Transform parent)
+	{
+		var segment = Instantiate(template, position, rotation, parent);
+		var collider = segment.AddComponent<BoxCollider>();
+		collider.size = collider.size + new Vector3(0f, m_wallHeight, 0f);
 	}
 
 	private void ClearWallS()
