@@ -407,7 +407,7 @@ MonoBehaviour:
   pickUpMass: 1
   pickUpPlayersCount: 1
   maxLift: 2
-  perTapLift: 0.25
+  perTapLift: 0.5
   liftFallSpeed: 0.5
 --- !u!114 &3702476515806212517
 MonoBehaviour:
