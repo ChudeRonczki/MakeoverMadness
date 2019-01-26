@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [NonSerialized] public Pickable objectToPickUp;
     [NonSerialized] public Pickable pickedUpObject;
     private Rigidbody rb;
-    private Vector3 lastMoveVector;
 
 
     private void Awake()
@@ -66,17 +65,14 @@ public class PlayerController : MonoBehaviour
         var moveVector = new Vector3(Input.GetAxis(horizontalAxis), 0, Input.GetAxis(verticalAxis));
 
         if (moveVector.sqrMagnitude > .1f)
-            rb.velocity = moveVector * movementSpeed;
-        else
         {
-            rb.velocity = Vector3.zero;
-            moveVector = lastMoveVector;
-        }
-        
-        float angularVelocityY = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
-        rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
+            rb.velocity = moveVector * movementSpeed;
+            float angularVelocityY = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
+            rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
 
-        lastMoveVector = moveVector;
+        }
+        else
+            rb.velocity = rb.angularVelocity = Vector3.zero;
 
 //        rb.AddForce(moveVector * movementSpeed, ForceMode.Acceleration);
 //        var angle = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
