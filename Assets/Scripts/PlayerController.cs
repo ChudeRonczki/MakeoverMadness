@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string verticalAxis;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
+    private CharacterController characterController;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
         if (Math.Abs(moveVector.sqrMagnitude) > .1f)
         {
-            transform.localPosition += moveVector * Time.deltaTime * movementSpeed;
+            characterController.Move(moveVector * Time.deltaTime * movementSpeed);
             transform.localRotation = Quaternion.RotateTowards(transform.localRotation,
                 Quaternion.LookRotation(moveVector), rotationSpeed * Time.deltaTime);
         }
