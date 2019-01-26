@@ -188,10 +188,14 @@ MonoBehaviour:
   horizontalAxis: Horizontal
   verticalAxis: Vertical
   pickDropButton: PickDrop
+  liftButton: Lift
   movementSpeed: 11
   rotationSpeed: 720
   pickableDetector: {fileID: 0}
   pickableJoint: {fileID: 0}
+  maxLift: 2
+  perTapLift: 0.25
+  liftFallSpeed: 1
 --- !u!54 &3321401575947725197
 Rigidbody:
   m_ObjectHideFlags: 0
