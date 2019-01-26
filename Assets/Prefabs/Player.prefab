@@ -190,12 +190,13 @@ MonoBehaviour:
   pickDropButton: PickDrop
   liftButton: Lift
   dashButton: Dash
+  lockMovementButton: LockMovement
   movementSpeed: 8
   rotationSpeed: 720
   dashSpeedMultiplier: 6
   dashTime: 0.15
   dashCooldown: 0.5
-  pickableDetector: {fileID: 0}
+  pickableDetector: {fileID: 622525457550306827}
   pickableJoint: {fileID: 0}
 --- !u!54 &3321401575947725197
 Rigidbody:
