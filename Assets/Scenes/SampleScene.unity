@@ -295,6 +295,11 @@ PrefabInstance:
       propertyPath: liftButton
       value: Lift2
       objectReference: {fileID: 0}
+    - target: {fileID: 4641999994184590895, guid: 717e8d9282ba9c740a75d630ab56de2f,
+        type: 3}
+      propertyPath: dashButton
+      value: Dash2
+      objectReference: {fileID: 0}
     - target: {fileID: 5365317298284455922, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
       propertyPath: m_ConnectedAnchor.x

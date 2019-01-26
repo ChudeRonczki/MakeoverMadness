@@ -11,9 +11,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string verticalAxis;
     [SerializeField] private string pickDropButton;
     [SerializeField] private string liftButton;
+    [SerializeField] private string dashButton;
     
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
+    
+    [SerializeField] private float dashSpeedMultiplier;
+    [SerializeField] private float dashTime;
+    [SerializeField] private float dashCooldown;
+
+    private float dashEndTime;
+    private float dashAvailableTime;
 
     public Collider pickableDetector;
     public Joint pickableJoint;
@@ -58,6 +66,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown(liftButton) && pickedUpObject)
             pickedUpObject.HandleLiftTapped(this);
+
+        if (Input.GetButtonDown(dashButton) && !pickedUpObject && dashAvailableTime < Time.timeSinceLevelLoad)
+        {
+            dashEndTime = Time.timeSinceLevelLoad + dashTime;
+            dashAvailableTime = Time.timeSinceLevelLoad + dashCooldown;
+        }
     }
 
     void FixedUpdate()
@@ -66,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         if (moveVector.sqrMagnitude > .1f)
         {
-            rb.velocity = moveVector * movementSpeed;
+            rb.velocity = moveVector * movementSpeed * CurrentDashMultiplier;
             float angularVelocityY = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
             rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
 
@@ -77,6 +91,17 @@ public class PlayerController : MonoBehaviour
 //        rb.AddForce(moveVector * movementSpeed, ForceMode.Acceleration);
 //        var angle = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
 //        rb.AddTorque(0f, rotationSpeed * angle * angle * Mathf.Sign(angle), 0f, ForceMode.Acceleration);
+    }
+
+    float CurrentDashMultiplier
+    {
+        get
+        {
+            if (pickedUpObject)
+                return 1f;
+
+            return dashEndTime >= Time.timeSinceLevelLoad ? dashSpeedMultiplier : 1f;
+        }
     }
 
     public void UpdateLift(float currentLift)
