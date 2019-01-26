@@ -34,6 +34,14 @@ public class PlayerController : MonoBehaviour
     [NonSerialized] public Pickable pickedUpObject;
     private Rigidbody rb;
 
+    [Header("Animations")] [SerializeField]
+    private Animator m_animator;
+
+    [SerializeField] private string m_forwardSpeedParam = "ForwardSpeed";
+    [SerializeField] private string m_sidewaysSpeedParam = "SidewaySpeed";
+    [SerializeField] private string m_holdingParam = "Holding";
+    [SerializeField] private string m_holdingUpParam = "HoldingHeight";
+
 
     private void Awake()
     {
@@ -50,6 +58,8 @@ public class PlayerController : MonoBehaviour
             var objectToPickUp = pickableDetector.ObjectToPick;
             if (pickedUpObject)
             {
+	            m_animator.SetFloat(m_holdingParam, 0);
+	            
                 pickableDetector.Clear();
                 pickedUpObject.HandleDropped(this);
                 pickedUpObject = null;
@@ -57,6 +67,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (objectToPickUp && objectToPickUp.CanPickUp(this))
             {
+	            m_animator.SetFloat(m_holdingParam, 1);
+	            
                 pickedUpObject = objectToPickUp;
                 objectToPickUp.HandlePickedUp(this, pickableDetector.PickupPoint);
                 objectToPickUp = null;
@@ -98,9 +110,16 @@ public class PlayerController : MonoBehaviour
             float angularVelocityY = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
             rb.angularVelocity = new Vector3(0f, angularVelocityY, 0f);
 
+            m_animator.SetFloat(m_forwardSpeedParam, Vector3.Dot(rb.velocity, transform.forward));
+            m_animator.SetFloat(m_sidewaysSpeedParam, Vector3.Dot(rb.velocity, transform.right));
         }
         else
-            rb.velocity = rb.angularVelocity = Vector3.zero;
+        {
+	        rb.velocity = rb.angularVelocity = Vector3.zero;
+	        
+	        m_animator.SetFloat(m_forwardSpeedParam, 0);
+	        m_animator.SetFloat(m_sidewaysSpeedParam, 0);
+        }
 
 //        rb.AddForce(moveVector * movementSpeed, ForceMode.Acceleration);
 //        var angle = Vector3.SignedAngle(transform.forward, moveVector, Vector3.up);
