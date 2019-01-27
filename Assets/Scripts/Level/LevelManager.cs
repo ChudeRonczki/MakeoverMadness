@@ -556,11 +556,11 @@ public class LevelManager : MonoBehaviour
             float roomsRatio = RoomsStayed / (float)RoomsProcessed;
             bool addNextRoom = true;
             
-            if (roomsRatio / RoomStayChance > 1.2f)    // too many stayed
+            if (roomsRatio / RoomStayChance > 1.1f)    // too many stayed
             {
                 addNextRoom = false;
             }
-            else if (roomsRatio / RoomStayChance < 0.8f)    // too little stayed
+            else if (roomsRatio / RoomStayChance < 0.9f)    // too little stayed
             {
                 addNextRoom = true;
             }
