@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
 
+    public int EasyLength = 360;
+    public int HardLength = 120;
     public int GameLengthSeconds = 60;
     public int SizeX = 20, SizeZ = 20;
     public int BigAmount = 1, MediumAmount = 1, SmallAmount = 1;
@@ -64,6 +66,15 @@ public class LevelManager : MonoBehaviour
         
         GenerateLevel();
 
+        if (PlayerPrefs.HasKey("Difficulty"))
+        {
+            GameLengthSeconds = (PlayerPrefs.GetInt("Difficulty") == 0) ? EasyLength : HardLength;
+        }
+        else
+        {
+            GameLengthSeconds = EasyLength;
+        }
+        
         StartCoroutine(StartSequence());
     }
 
@@ -675,15 +686,18 @@ internal struct Score
 internal class Highscore
 {   
     private const string HIGH_SCORE_PREFIX = "HS";
+    private const string DIFFICULTY_PREFIX = "D";
     private const int CAPACITY = 5;
     private string levelId;
+    private string difficulty;
     
     public List<Score> scores = new List<Score>();
 
     public Highscore(string _levelId)
     {
         levelId = _levelId;
-        var serializedScores = PlayerPrefs.GetString(HIGH_SCORE_PREFIX + levelId);
+        difficulty = PlayerPrefs.GetInt("Difficulty", 0).ToString();
+        var serializedScores = PlayerPrefs.GetString(HIGH_SCORE_PREFIX + levelId + DIFFICULTY_PREFIX + difficulty);
         var splitScores = serializedScores.Split(';');
 
         for (int i = 0; i + 1 < splitScores.Length; i += 2)
@@ -719,7 +733,7 @@ internal class Highscore
             sb.Append($"{score.Name};{score.Percent};");
         }
         
-        PlayerPrefs.SetString(HIGH_SCORE_PREFIX + levelId, sb.ToString());
+        PlayerPrefs.SetString(HIGH_SCORE_PREFIX + levelId + DIFFICULTY_PREFIX + difficulty, sb.ToString());
         PlayerPrefs.Save();
     }
 

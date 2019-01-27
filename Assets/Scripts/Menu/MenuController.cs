@@ -19,6 +19,7 @@ public class MenuController : MonoBehaviour
 
 	[SerializeField] private string[] m_levelsText;
 	[SerializeField] private string[] m_levelsNames;
+	[SerializeField] private int[] m_levelDifficulties;
 
 	private int m_levelIndex = 0;
 
@@ -37,6 +38,7 @@ public class MenuController : MonoBehaviour
 
 	public void StartGame()
 	{
+		PlayerPrefs.SetInt("Difficulty", m_levelDifficulties[m_levelIndex]);
 		SceneManager.LoadScene(m_levelsNames[m_levelIndex]);
 	}
 
