@@ -18,6 +18,9 @@ public class WallGenerator : MonoBehaviour
 
 	[HideInInspector] public bool[] m_verticalConnections;
 	[HideInInspector] public bool[] m_horizontalConnections;
+	
+	[SerializeField] private Material m_mainMaterial;
+	[SerializeField] private Material[] m_mainMaterialVariants;
 
 	private void Reset()
 	{
@@ -210,6 +213,25 @@ public class WallGenerator : MonoBehaviour
 		for (int i = transform.childCount - 1; i >= 0; i--)
 		{
 			DestroyImmediate((transform.GetChild(i).gameObject));
+		}
+	}
+
+	private void Start()
+	{
+		var meshRenderers = GetComponentsInChildren<MeshRenderer>();
+		var mainMaterialVariant = m_mainMaterialVariants[Random.Range(0, m_mainMaterialVariants.Length)];
+
+		foreach (var meshRenderer in meshRenderers)
+		{
+			var sharedMaterials = meshRenderer.sharedMaterials;
+
+			for (int i = 0; i < sharedMaterials.Length; ++i)
+			{
+				if (sharedMaterials[i] == m_mainMaterial)
+					sharedMaterials[i] = mainMaterialVariant;
+			}
+
+			meshRenderer.sharedMaterials = sharedMaterials;
 		}
 	}
 }
