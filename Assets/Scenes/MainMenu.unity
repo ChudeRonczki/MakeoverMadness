@@ -1435,7 +1435,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -3454,12 +3454,12 @@ PrefabInstance:
     - target: {fileID: 4933922701863725337, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4933922701863725337, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2888478275323991628, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
@@ -3474,12 +3474,12 @@ PrefabInstance:
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
@@ -3494,7 +3494,7 @@ PrefabInstance:
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4283190348
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 304906325396025990, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
@@ -3509,12 +3509,12 @@ PrefabInstance:
     - target: {fileID: 1185514843170983308, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1185514843170983308, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 452846959491324870, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}

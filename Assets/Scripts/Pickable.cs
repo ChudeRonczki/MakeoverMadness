@@ -18,7 +18,7 @@ public class Pickable : MonoBehaviour
     private float currentLift;
 
     private Rigidbody rb;
-    private List<PlayerController> pickingUp;
+    protected List<PlayerController> pickingUp;
     private float drag;
     private float angularDrag;
     private float defaultMass;
@@ -60,7 +60,7 @@ public class Pickable : MonoBehaviour
         return !pickingUp.Contains(player) && pickingUp.Count != pickUpPlayersCount;
     }
 
-    public void HandlePickedUp(PlayerController player, Collider usedPoint)
+    public virtual void HandlePickedUp(PlayerController player, Collider usedPoint)
     {
         pickingUp.Add(player);
         liftTapped.Add(player, false);
@@ -147,6 +147,7 @@ public class Pickable : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        AudioSource.PlayClipAtPoint(hitClip, other.contacts[0].point);
+        if (hitClip)
+            AudioSource.PlayClipAtPoint(hitClip, other.contacts[0].point);
     }
 }

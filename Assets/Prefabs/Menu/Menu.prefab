@@ -128,10 +128,21 @@ MonoBehaviour:
   - {fileID: 4710607191023065257}
   - {fileID: 4141828064467196150}
   - {fileID: 7886261820518169699}
+  m_horizontalAxis: Horizontal
   m_verticalAxis: Vertical
   m_acceptButton: FurniturePreview
   m_backButton: Lift
   m_credits: {fileID: 0}
+  m_levelsText:
+  - Home 1a
+  - Home 1b
+  - Home 2a
+  - Home 2b
+  m_levelsNames:
+  - HouseSmall
+  - HouseSmall
+  - House
+  - House
 --- !u!1001 &1651302470337369428
 PrefabInstance:
   m_ObjectHideFlags: 0
