@@ -47,6 +47,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Material[] FurnitureTextures;
     private int[] MaterialIndexes = new int[18];
     private bool MaterialsInitialized = false;
+    private int RoomsStayed = 0;
+    private int RoomsProcessed = 0;
     
     private void Awake()
     {
@@ -241,6 +243,11 @@ public class LevelManager : MonoBehaviour
                 result += "\n" + location.gameObject.name + ": ds=" + location.DistanceScore + " as=" + location.AngleScore + " total=" + location.Score;
             }
             Debug.Log(result);
+        }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Q))
+        {
+            Highscore.Clear();
         }
     }
 
@@ -528,6 +535,7 @@ public class LevelManager : MonoBehaviour
         for(int s = 0; s < children.Length; s++)
         {
             var child = children[s];
+            RoomsProcessed++;
 
             if (MaterialsInitialized)
             {
@@ -544,10 +552,27 @@ public class LevelManager : MonoBehaviour
             Duplicate.transform.localScale = Vector3.one;
             scorings[s] = Duplicate.GetComponent<ScoringComponent>();
 
-            if (Random.value < RoomStayChance)
+            float roomsRatio = RoomsStayed / (float)RoomsProcessed;
+            bool addNextRoom = true;
+            
+            if (roomsRatio / RoomStayChance > 1.2f)    // too many stayed
+            {
+                addNextRoom = false;
+            }
+            else if (roomsRatio / RoomStayChance < 0.8f)    // too little stayed
+            {
+                addNextRoom = true;
+            }
+            else if (Random.value < RoomStayChance)    // about right, so random
+            {
+                addNextRoom = false;
+            }
+            
+            if (addNextRoom)
             {
                 Duplicate.transform.position = child.transform.position;
                 Duplicate.transform.rotation = child.transform.rotation;
+                RoomsStayed++;
             }
             else
             {
@@ -575,6 +600,7 @@ public class LevelManager : MonoBehaviour
                 {
                     Duplicate.transform.position = child.transform.position;
                     Duplicate.transform.rotation = child.transform.rotation;
+                    RoomsStayed++;
                 }
             }
         }
@@ -688,6 +714,12 @@ internal class Highscore
         }
         
         PlayerPrefs.SetString(HIGH_SCORE_PREFIX + levelId, sb.ToString());
+        PlayerPrefs.Save();
+    }
+
+    public static void Clear()
+    {
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
     }
 }
