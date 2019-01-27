@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -31,8 +32,10 @@ public class LevelManager : MonoBehaviour
     public List<RoomConfig> Rooms;
     private PlayerController[] Players;
     [SerializeField] private bool UseOldSystem;
+    [SerializeField] private string levelId;
 
-
+    private char[] ScoreName = new[] {'_', '_', '_'};
+    
     private void Awake()
     {
         Instance = this;
@@ -93,6 +96,65 @@ public class LevelManager : MonoBehaviour
         int percent = Mathf.RoundToInt(100f * ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations));
         
         BigText.text = "TIME'S UP!\n\nSCORE: " + percent + "% !";
+        
+        yield return new WaitForSeconds(3f);
+
+        var highscore = new Highscore(levelId);
+
+        if (highscore.ShouldAdd(percent))
+        {
+            yield return EnterNameRoutine();
+            highscore.Add(new Score { Name = "" + ScoreName[0] + ScoreName[1] + ScoreName[2], Percent = percent});
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("HIGH SCORES:");
+        foreach (var score in highscore.scores)
+        {
+            sb.AppendLine($"{score.Name} {score.Percent}");
+        }
+        BigText.text = sb.ToString();
+    }
+
+    private IEnumerator EnterNameRoutine()
+    {
+        bool refresh = true;
+        int filledIn = 0;
+        while (true)
+        {
+            if (refresh)
+            {
+                BigText.text = "ENTER YOUR INITIALS:\n" + ScoreName[0] + ScoreName[1] + ScoreName[2];
+                refresh = false;
+            }
+            
+            
+            
+            if (Input.GetKeyDown(KeyCode.Return) && filledIn == 3)
+                yield break;
+
+            if (Input.GetKeyDown(KeyCode.Backspace) && filledIn > 0)
+            {
+                ScoreName[--filledIn] = '_';
+                refresh = true;
+            }
+
+            if (filledIn < 3)
+            {
+                for (int i = (int) KeyCode.A; i <= (int) KeyCode.Z; ++i)
+                {
+                    if (Input.GetKeyDown((KeyCode) i))
+                    {
+                        ScoreName[filledIn++] = ((KeyCode) i).ToString()[0];
+                        refresh = true;
+                        if (filledIn == 3)
+                            break;
+                    }
+                }
+            }
+
+            yield return null;
+        }
     }
 
     public void Update()
@@ -465,5 +527,63 @@ public class LevelManager : MonoBehaviour
         {
             player.GetComponent<MeshRenderer>().enabled = true;
         }
+    }
+}
+
+internal struct Score
+{
+    public string Name { get; set; }
+    public int Percent { get; set; }
+}
+
+internal class Highscore
+{   
+    private const string HIGH_SCORE_PREFIX = "HS";
+    private const int CAPACITY = 5;
+    private string levelId;
+    
+    public List<Score> scores = new List<Score>();
+
+    public Highscore(string _levelId)
+    {
+        levelId = _levelId;
+        var serializedScores = PlayerPrefs.GetString(HIGH_SCORE_PREFIX + levelId);
+        var splitScores = serializedScores.Split(';');
+
+        for (int i = 0; i + 1 < splitScores.Length; i += 2)
+        {
+            scores.Add(new Score {Name = splitScores[i], Percent = int.Parse(splitScores[i + 1])});
+        }
+    }
+
+    public bool ShouldAdd(int percent)
+    {
+        if (scores.Count < CAPACITY)
+            return true;
+
+        return scores.Select(score => score.Percent).Min() < percent;
+    }
+
+    public void Add(Score score)
+    {
+        scores.Add(score);
+        scores.Sort((score1, score2) => score2.Percent.CompareTo(score1.Percent));
+        
+        while (scores.Count > CAPACITY)
+            scores.RemoveAt(scores.Count - 1);
+        
+        Save();
+    }
+
+    public void Save()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var score in scores)
+        {
+            sb.Append($"{score.Name};{score.Percent};");
+        }
+        
+        PlayerPrefs.SetString(HIGH_SCORE_PREFIX + levelId, sb.ToString());
+        PlayerPrefs.Save();
     }
 }
