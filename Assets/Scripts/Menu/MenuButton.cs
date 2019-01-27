@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,7 @@ public class MenuButton : MonoBehaviour
 	[SerializeField] private string m_deselect;
 
 	[SerializeField] private UnityEvent m_clickEvent;
+	public TextMeshPro m_textMesh;
 
 	public void Select()
 	{

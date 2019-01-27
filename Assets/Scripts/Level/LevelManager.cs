@@ -43,7 +43,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioClip tickTockClip;
     [SerializeField] private AudioClip endClip;
     [SerializeField] private AudioClip typeClip;
+
+    [SerializeField] private Material[] FurnitureTextures;
+    private int[] MaterialIndexes = new int[18];
+    private bool MaterialsInitialized = false;
+    private int RoomsStayed = 0;
+    private int RoomsProcessed = 0;
     
+    private bool endTriggered;
     private void Awake()
     {
         Instance = this;
@@ -94,7 +101,7 @@ public class LevelManager : MonoBehaviour
 
         AudioSource tickTockComponent = null;
         int seconds = GameLengthSeconds;
-        while (seconds > 0)
+        while (seconds > 0 && !endTriggered)
         {
             CountdownText.text = "" + seconds;
             seconds--;
@@ -238,6 +245,11 @@ public class LevelManager : MonoBehaviour
             }
             Debug.Log(result);
         }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Q))
+        {
+            Highscore.Clear();
+        }
     }
 
     public void CachePlayers()
@@ -255,6 +267,15 @@ public class LevelManager : MonoBehaviour
     
     public void GenerateLevel(int seed = 0)
     {
+        if (FurnitureTextures.Length > 0)
+        {
+            for (int i = 0; i < MaterialIndexes.Length; i++)
+            {
+                MaterialIndexes[i] = Random.Range(0, FurnitureTextures.Length);
+            }
+            MaterialsInitialized = true;
+        }
+        
         GameObject[] LayoutSpaceObjects = GameObject.FindGameObjectsWithTag("EmptySpace");
         GameObject[] StartingSpaceObjects = GameObject.FindGameObjectsWithTag("StartingSpace");
         
@@ -515,17 +536,49 @@ public class LevelManager : MonoBehaviour
         for(int s = 0; s < children.Length; s++)
         {
             var child = children[s];
+            RoomsProcessed++;
+
+            if (MaterialsInitialized)
+            {
+                var mr = child.GetComponent<MeshRenderer>();
+                var mats = mr.materials;
+                for (int m = 0; m < mats.Length; m++)
+                {
+                    mats[m] = FurnitureTextures[MaterialIndexes[child.ID]];
+                }
+                mr.materials = mats;
+            }
+            
             var Duplicate = Instantiate(child.gameObject, Vector3.zero, Quaternion.identity);
             Duplicate.transform.localScale = Vector3.one;
             scorings[s] = Duplicate.GetComponent<ScoringComponent>();
 
-            if (Random.value < RoomStayChance)
+            float roomsRatio = RoomsStayed / (float)RoomsProcessed;
+            bool addNextRoom = true;
+            
+            if (roomsRatio / RoomStayChance > 1.1f)    // too many stayed
+            {
+                addNextRoom = false;
+            }
+            else if (roomsRatio / RoomStayChance < 0.9f)    // too little stayed
+            {
+                addNextRoom = true;
+            }
+            else if (Random.value < RoomStayChance)    // about right, so random
+            {
+                addNextRoom = false;
+            }
+            
+            if (addNextRoom)
             {
                 Duplicate.transform.position = child.transform.position;
                 Duplicate.transform.rotation = child.transform.rotation;
+                RoomsStayed++;
             }
             else
             {
+                bool found = false;
+                
                 for (int i = 0; i < SizeX; i++)
                 {
                     for (int j = 0; j < SizeZ; j++)
@@ -539,8 +592,16 @@ public class LevelManager : MonoBehaviour
                             Duplicate.transform.position = new Vector3(i + offset.x, 0f, j + offset.y);
                             i = SizeX;
                             j = SizeZ;
+                            found = true;
                         }
                     }
+                }
+
+                if (!found)
+                {
+                    Duplicate.transform.position = child.transform.position;
+                    Duplicate.transform.rotation = child.transform.rotation;
+                    RoomsStayed++;
                 }
             }
         }
@@ -598,6 +659,11 @@ public class LevelManager : MonoBehaviour
             player.SkinnedRenderer.enabled = true;
         }
     }
+
+    public void FinishLevel()
+    {
+        endTriggered = true;
+    }
 }
 
 internal struct Score
@@ -654,6 +720,12 @@ internal class Highscore
         }
         
         PlayerPrefs.SetString(HIGH_SCORE_PREFIX + levelId, sb.ToString());
+        PlayerPrefs.Save();
+    }
+
+    public static void Clear()
+    {
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
     }
 }
