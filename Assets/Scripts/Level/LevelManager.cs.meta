@@ -10,6 +10,10 @@ MonoImporter:
   - CountdownText: {instanceID: 0}
   - StarsParticles: {fileID: 2701886110523435087, guid: c1b8cd5d113bc0242949b534c69eb3d2,
       type: 3}
+  - levelMusic: {fileID: 8300000, guid: 4a5a4d9b1a4ef264dae89cee1225db34, type: 3}
+  - tickTockClip: {fileID: 8300000, guid: 5aab37adc10d8264aa41d463d1812b65, type: 3}
+  - endClip: {fileID: 8300000, guid: 508b23600d2b62c4e908482827a4a434, type: 3}
+  - typeClip: {fileID: 8300000, guid: c8dcf01242efed34fae13fed55c3c268, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

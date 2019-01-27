@@ -37,8 +37,12 @@ public class LevelManager : MonoBehaviour
 
     public ParticleSystem StarsParticles;
     private char[] ScoreName = new[] {'_', '_', '_'};
-    
 
+    [SerializeField] private AudioClip levelMusic;
+    [SerializeField] private AudioClip tickTockClip;
+    [SerializeField] private AudioClip endClip;
+    [SerializeField] private AudioClip typeClip;
+    
     private void Awake()
     {
         Instance = this;
@@ -46,6 +50,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        AudioSource.PlayClipAtPoint(levelMusic, Vector3.zero);
+        
         CachePlayers();
         
         GenerateLevel();
@@ -85,13 +91,27 @@ public class LevelManager : MonoBehaviour
         
         BigText.text = "";
 
+        AudioSource tickTockComponent = null;
         int seconds = GameLengthSeconds;
         while (seconds > 0)
         {
             CountdownText.text = "" + seconds;
             seconds--;
+
+            if (seconds <= 10 && tickTockComponent == null)
+            {
+                tickTockComponent = gameObject.AddComponent<AudioSource>();
+                tickTockComponent.clip = tickTockClip;
+                tickTockComponent.loop = true;
+                tickTockComponent.volume = .05f;
+                tickTockComponent.Play();
+            }
+            
             yield return new WaitForSeconds(1f);
         }
+        
+        Destroy(tickTockComponent);
+        AudioSource.PlayClipAtPoint(endClip, Vector3.zero);
         
         EnableInput(false);
         CountdownText.text = "";
@@ -171,6 +191,7 @@ public class LevelManager : MonoBehaviour
             {
                 ScoreName[--filledIn] = '_';
                 refresh = true;
+                AudioSource.PlayClipAtPoint(typeClip, Vector3.zero);
             }
 
             if (filledIn < 3)
@@ -181,6 +202,7 @@ public class LevelManager : MonoBehaviour
                     {
                         ScoreName[filledIn++] = ((KeyCode) i).ToString()[0];
                         refresh = true;
+                        AudioSource.PlayClipAtPoint(typeClip, Vector3.zero);
                         if (filledIn == 3)
                             break;
                     }

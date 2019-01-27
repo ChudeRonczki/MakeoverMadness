@@ -25646,6 +25646,10 @@ MonoBehaviour:
   - {fileID: 1383296641}
   - {fileID: 1004026183}
   - {fileID: 2090213263}
+  levelMusic: {fileID: 8300000, guid: 4a5a4d9b1a4ef264dae89cee1225db34, type: 3}
+  tickTockClip: {fileID: 8300000, guid: 5aab37adc10d8264aa41d463d1812b65, type: 3}
+  endClip: {fileID: 8300000, guid: 508b23600d2b62c4e908482827a4a434, type: 3}
+  typeClip: {fileID: 8300000, guid: c8dcf01242efed34fae13fed55c3c268, type: 3}
 --- !u!114 &1701121649
 MonoBehaviour:
   m_ObjectHideFlags: 0

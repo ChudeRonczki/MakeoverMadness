@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private ParticleSystem dustParticleSystem;
 
+    [SerializeField] private AudioClip pickDropClip;
+    [SerializeField] private AudioClip dashClip;
+
     private float dashEndTime;
     private float dashAvailableTime;
 
@@ -84,6 +87,8 @@ public class PlayerController : MonoBehaviour
                 pickedUpObject.HandleDropped(this);
                 pickedUpObject = null;
                 Destroy(pickableJoint);
+                
+                AudioSource.PlayClipAtPoint(pickDropClip, transform.position);
             }
             else if (objectToPickUp && objectToPickUp.CanPickUp(this))
             {
@@ -99,6 +104,8 @@ public class PlayerController : MonoBehaviour
                 startAnchor = pickableJoint.anchor;
                 pickableJoint.autoConfigureConnectedAnchor = false;
                 m_animator.SetFloat(m_holdingUpParam, 0f);
+                
+                AudioSource.PlayClipAtPoint(pickDropClip, transform.position);
             }
         }
 
@@ -109,6 +116,7 @@ public class PlayerController : MonoBehaviour
         {
             dashEndTime = Time.timeSinceLevelLoad + dashTime;
             dashAvailableTime = Time.timeSinceLevelLoad + dashCooldown;
+            AudioSource.PlayClipAtPoint(dashClip, transform.position);
         }
 
         if (Input.GetButtonDown(furniturePreviewButton))

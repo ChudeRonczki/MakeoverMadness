@@ -202,6 +202,8 @@ MonoBehaviour:
   dashTime: 0.15
   dashCooldown: 0.5
   dustParticleSystem: {fileID: 2845562312494625255}
+  pickDropClip: {fileID: 8300000, guid: 03743a7b45948c943aa1d8f3b7d044b5, type: 3}
+  dashClip: {fileID: 8300000, guid: 82d9653372bf2ad4595b5ee699e31614, type: 3}
   pickableDetector: {fileID: 622525457550306827}
   pickableJoint: {fileID: 0}
   m_animator: {fileID: 6246878096579562302}
