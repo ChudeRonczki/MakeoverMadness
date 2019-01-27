@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCooldown;
 
+    [SerializeField] private ParticleSystem dustParticleSystem;
+
     private float dashEndTime;
     private float dashAvailableTime;
 
@@ -52,6 +54,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        var emission = dustParticleSystem.emission;
+        emission.enabled = false;
     }
     
     // Update is called once per frame
@@ -118,9 +122,13 @@ public class PlayerController : MonoBehaviour
 
             m_animator.SetFloat(m_forwardSpeedParam, Vector3.Dot(rb.velocity, transform.forward));
             m_animator.SetFloat(m_sidewaysSpeedParam, Vector3.Dot(rb.velocity, transform.right));
+            var emission = dustParticleSystem.emission;
+            emission.enabled = true;
         }
         else
         {
+            var emission = dustParticleSystem.emission;
+            emission.enabled = false;
 	        rb.velocity = Vector3.zero;
 	        
 	        m_animator.SetFloat(m_forwardSpeedParam, 0);
