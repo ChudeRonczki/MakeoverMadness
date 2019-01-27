@@ -554,22 +554,22 @@ public class LevelManager : MonoBehaviour
             scorings[s] = Duplicate.GetComponent<ScoringComponent>();
 
             float roomsRatio = RoomsStayed / (float)RoomsProcessed;
-            bool addNextRoom = true;
+            bool keepNextRoom = true;
             
             if (roomsRatio / RoomStayChance > 1.1f)    // too many stayed
             {
-                addNextRoom = false;
+                keepNextRoom = false;
             }
             else if (roomsRatio / RoomStayChance < 0.9f)    // too little stayed
             {
-                addNextRoom = true;
+                keepNextRoom = true;
             }
             else if (Random.value < RoomStayChance)    // about right, so random
             {
-                addNextRoom = false;
+                keepNextRoom = false;
             }
             
-            if (addNextRoom)
+            if (keepNextRoom)
             {
                 Duplicate.transform.position = child.transform.position;
                 Duplicate.transform.rotation = child.transform.rotation;
