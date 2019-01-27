@@ -10,7 +10,8 @@ public class Pickable : MonoBehaviour
     public Collider[] pickPointsColliders;
     public float pickUpMass;
     public int pickUpPlayersCount;
-    
+
+    public float minLift;
     public float maxLift;
     public float perTapLift;
     public float liftFallSpeed;
@@ -132,7 +133,7 @@ public class Pickable : MonoBehaviour
                 }
             }
             else
-                currentLift = Mathf.Max(0f, currentLift - liftFallSpeed * Time.fixedDeltaTime);
+                currentLift = Mathf.Max(pickingUp.Count > 0 ? minLift : 0f, currentLift - liftFallSpeed * Time.fixedDeltaTime);
         }
 
         if (currentLift != previousLift)

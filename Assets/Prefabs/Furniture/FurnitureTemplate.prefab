@@ -406,6 +406,7 @@ MonoBehaviour:
   - {fileID: 6226347412589653618}
   pickUpMass: 1
   pickUpPlayersCount: 1
+  minLift: 0.1
   maxLift: 2
   perTapLift: 0.5
   liftFallSpeed: 0.5
