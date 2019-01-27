@@ -24,7 +24,8 @@ public class Pickable : MonoBehaviour
 
     private Dictionary<PlayerController, bool> liftTapped;
     private Dictionary<PlayerController, Collider> usedPoints;
-    
+    [SerializeField] private AudioClip hitClip;
+
 
     private void Awake()
     {
@@ -141,5 +142,10 @@ public class Pickable : MonoBehaviour
                 player.UpdateLift(currentLift);
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        AudioSource.PlayClipAtPoint(hitClip, other.contacts[0].point);
     }
 }

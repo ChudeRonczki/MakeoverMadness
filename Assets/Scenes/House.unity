@@ -23169,7 +23169,7 @@ PrefabInstance:
     - target: {fileID: 928161499415252310, guid: ec85cb8b0ab17e94285acc39d3e46a21,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.39
+      value: 6.42
       objectReference: {fileID: 0}
     - target: {fileID: 928161499415252310, guid: ec85cb8b0ab17e94285acc39d3e46a21,
         type: 3}
@@ -23179,7 +23179,7 @@ PrefabInstance:
     - target: {fileID: 928161499415252310, guid: ec85cb8b0ab17e94285acc39d3e46a21,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.32
+      value: 6.89
       objectReference: {fileID: 0}
     - target: {fileID: 928161499415252310, guid: ec85cb8b0ab17e94285acc39d3e46a21,
         type: 3}
@@ -25061,7 +25061,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665838536}
   m_LocalRotation: {x: 0.5591929, y: 0, z: 0, w: 0.8290376}
-  m_LocalPosition: {x: 10.6, y: 31.56, z: -6.2}
+  m_LocalPosition: {x: 10.5, y: 32.58, z: -6.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 831972615}
@@ -25648,10 +25648,14 @@ MonoBehaviour:
   - {fileID: 1004026183}
   - {fileID: 2090213263}
   UseOldSystem: 0
-  RoomStayChance: 0.75
+  RoomStayChance: 0.66
   levelId: House
   StarsParticles: {fileID: 2701886110523435087, guid: c1b8cd5d113bc0242949b534c69eb3d2,
     type: 3}
+  levelMusic: {fileID: 8300000, guid: 4a5a4d9b1a4ef264dae89cee1225db34, type: 3}
+  tickTockClip: {fileID: 8300000, guid: 5aab37adc10d8264aa41d463d1812b65, type: 3}
+  endClip: {fileID: 8300000, guid: 508b23600d2b62c4e908482827a4a434, type: 3}
+  typeClip: {fileID: 8300000, guid: c8dcf01242efed34fae13fed55c3c268, type: 3}
 --- !u!114 &1701121649
 MonoBehaviour:
   m_ObjectHideFlags: 0
