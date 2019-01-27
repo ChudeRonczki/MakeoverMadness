@@ -25624,7 +25624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f5ea0e7f11fc947a57d31f1ed2536c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameLengthSeconds: 60
+  GameLengthSeconds: 120
   SizeX: 25
   SizeZ: 17
   BigAmount: 1

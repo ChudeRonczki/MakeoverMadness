@@ -35,8 +35,14 @@ public class ScoringSystem : MonoBehaviour
                 if (Distance > MaxDistance || Angle > MaxAngle)
                     continue;
 
-                float DistanceScore = 1f - Distance / MaxDistance;
-                float AngleScore = 1f - Angle / MaxAngle;
+                // Easy
+                float DistanceScore = 1f;
+                float AngleScore = 1f;
+                
+                // Fair
+                //float DistanceScore = 1f - Distance / MaxDistance;
+                //float AngleScore = 1f - Angle / MaxAngle;
+                
                 float Score = 0.5f * (DistanceScore + AngleScore);
 
                 if (BestScore < Score)
