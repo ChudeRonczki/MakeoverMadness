@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     [Header("Animations")] [SerializeField]
     private Animator m_animator;
 
+    public SkinnedMeshRenderer SkinnedRenderer => m_animator.GetComponentInChildren<SkinnedMeshRenderer>();
+
     [SerializeField] private string m_forwardSpeedParam = "ForwardSpeed";
     [SerializeField] private string m_sidewaysSpeedParam = "SidewaySpeed";
     [SerializeField] private string m_holdingParam = "Holding";

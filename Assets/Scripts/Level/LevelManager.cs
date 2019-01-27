@@ -32,10 +32,13 @@ public class LevelManager : MonoBehaviour
     public List<RoomConfig> Rooms;
     private PlayerController[] Players;
     [SerializeField] private bool UseOldSystem;
+    [SerializeField] private float RoomStayChance = 0.66f;
     [SerializeField] private string levelId;
 
+    public ParticleSystem StarsParticles;
     private char[] ScoreName = new[] {'_', '_', '_'};
     
+
     private void Awake()
     {
         Instance = this;
@@ -92,10 +95,24 @@ public class LevelManager : MonoBehaviour
         
         EnableInput(false);
         CountdownText.text = "";
-        
+
         int percent = Mathf.RoundToInt(100f * ScoringSystem.Instance.CalculateScore(TargetLocations, FurnitureLocations));
+
+        StartCoroutine(DrawStars());
+
+        for (float t = 0f; t < 5f; t += Time.deltaTime)
+        {
+            float perc = t / 5f;
+            int i = Mathf.RoundToInt(Mathf.Sqrt(perc) * percent - 1);
+
+            BigText.text = "TIME'S UP!\n\nSCORE: " + i + "%";
+            
+            yield return null;
+        }
         
-        BigText.text = "TIME'S UP!\n\nSCORE: " + percent + "% !";
+        yield return new WaitForSeconds(0.5f);
+        
+        BigText.text = "TIME'S UP!\n\nSCORE: " + percent + "%";
         
         yield return new WaitForSeconds(3f);
 
@@ -116,6 +133,23 @@ public class LevelManager : MonoBehaviour
         BigText.text = sb.ToString();
     }
 
+    IEnumerator DrawStars()
+    {
+        foreach (var scoringComp in TargetLocations)
+        {
+            if (scoringComp.Score > 0.1f)
+            {
+                var vfx = Instantiate<ParticleSystem>(StarsParticles, transform);
+                vfx.transform.position = scoringComp.transform.position + Vector3.up;
+                vfx.transform.localScale = Vector3.one;
+                
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+
+        yield return null;
+    }
+    
     private IEnumerator EnterNameRoutine()
     {
         bool refresh = true;
@@ -449,7 +483,7 @@ public class LevelManager : MonoBehaviour
             Duplicate.transform.localScale = Vector3.one;
             scorings[s] = Duplicate.GetComponent<ScoringComponent>();
 
-            if (s % 3 > 0)
+            if (Random.value < RoomStayChance)
             {
                 Duplicate.transform.position = child.transform.position;
                 Duplicate.transform.rotation = child.transform.rotation;
@@ -508,7 +542,7 @@ public class LevelManager : MonoBehaviour
         }
         foreach (var player in Players)
         {
-            player.GetComponent<MeshRenderer>().enabled = false;
+            player.SkinnedRenderer.enabled = false;
         }
         
         Camera.main.targetTexture = CameraRenderTexture;
@@ -525,7 +559,7 @@ public class LevelManager : MonoBehaviour
         }
         foreach (var player in Players)
         {
-            player.GetComponent<MeshRenderer>().enabled = true;
+            player.SkinnedRenderer.enabled = true;
         }
     }
 }
