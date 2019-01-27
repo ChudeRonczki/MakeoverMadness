@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -151,6 +152,19 @@ public class LevelManager : MonoBehaviour
             sb.AppendLine($"{score.Name} {score.Percent}");
         }
         BigText.text = sb.ToString();
+
+        yield return new WaitForSeconds(.2f);
+        
+        while (true)
+        {
+            if (Input.anyKey)
+            {
+                SceneManager.LoadScene("MainMenu");
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     IEnumerator DrawStars()
