@@ -57,7 +57,17 @@ public class PlayerController : MonoBehaviour
         var emission = dustParticleSystem.emission;
         emission.enabled = false;
     }
-    
+
+    private void OnDisable()
+    {
+        var emission = dustParticleSystem.emission;
+        emission.enabled = false;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        m_animator.SetFloat(m_forwardSpeedParam, 0);
+        m_animator.SetFloat(m_sidewaysSpeedParam, 0);
+    }
+
     // Update is called once per frame
     void Update()
     {
