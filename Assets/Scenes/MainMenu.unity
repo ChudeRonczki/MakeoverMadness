@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -489,7 +489,7 @@ Transform:
   - {fileID: 465136686}
   - {fileID: 1701790472}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &465136686 stripped
 Transform:
@@ -705,7 +705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &609215737 stripped
 Transform:
@@ -782,72 +782,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3be15fbcf2857594298840647ba4d7d6, type: 3}
---- !u!1 &790210422
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 790210425}
-  - component: {fileID: 790210424}
-  - component: {fileID: 790210423}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &790210423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790210422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &790210424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790210422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &790210425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790210422}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &796198391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,9 +3372,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
+      propertyPath: m_levelsText.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
+        type: 3}
+      propertyPath: m_levelsNames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
+        type: 3}
       propertyPath: m_credits
       value: 
       objectReference: {fileID: 86840828}
+    - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
+        type: 3}
+      propertyPath: m_levelsText.Array.data[0]
+      value: House A1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
+        type: 3}
+      propertyPath: m_levelsText.Array.data[1]
+      value: House B1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
+        type: 3}
+      propertyPath: m_levelsNames.Array.data[0]
+      value: House
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504185796262798393, guid: b57e3ab5e65528144840ca649fff8839,
+        type: 3}
+      propertyPath: m_levelsNames.Array.data[1]
+      value: HouseSmall
+      objectReference: {fileID: 0}
     - target: {fileID: 5778159374958958099, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_Mesh
@@ -3454,12 +3418,12 @@ PrefabInstance:
     - target: {fileID: 4933922701863725337, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4933922701863725337, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2888478275323991628, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
@@ -3474,12 +3438,12 @@ PrefabInstance:
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4349661849219344710, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
@@ -3509,12 +3473,12 @@ PrefabInstance:
     - target: {fileID: 1185514843170983308, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1185514843170983308, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 452846959491324870, guid: b57e3ab5e65528144840ca649fff8839,
         type: 3}
