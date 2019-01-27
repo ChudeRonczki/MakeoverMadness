@@ -2472,7 +2472,7 @@ PrefabInstance:
     - target: {fileID: 4641999994184590894, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4641999994184590894, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
@@ -7393,7 +7393,7 @@ PrefabInstance:
     - target: {fileID: 4641999994184590894, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4641999994184590894, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
@@ -7492,6 +7492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f5ea0e7f11fc947a57d31f1ed2536c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameLengthSeconds: 60
   SizeX: 20
   SizeZ: 20
   BigAmount: 1
@@ -7528,6 +7529,10 @@ MonoBehaviour:
   - {fileID: 1387469834}
   Rooms: []
   UseOldSystem: 1
+  RoomStayChance: 0.66
+  levelId: Ramori
+  StarsParticles: {fileID: 2701886110523435087, guid: c1b8cd5d113bc0242949b534c69eb3d2,
+    type: 3}
 --- !u!4 &2095745138
 Transform:
   m_ObjectHideFlags: 0

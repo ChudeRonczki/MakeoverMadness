@@ -34,8 +34,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool UseOldSystem;
     [SerializeField] private float RoomStayChance = 0.66f;
     [SerializeField] private string levelId;
-
-    public ParticleSystem StarsParticles;
+    [SerializeField] private ParticleSystem StarsParticles;
+    
     private char[] ScoreName = new[] {'_', '_', '_'};
     
 

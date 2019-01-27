@@ -3973,7 +3973,7 @@ PrefabInstance:
     - target: {fileID: 4641999994184590894, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.827
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4641999994184590894, guid: 717e8d9282ba9c740a75d630ab56de2f,
         type: 3}
@@ -19100,7 +19100,7 @@ PrefabInstance:
     - target: {fileID: 928161499415252310, guid: ec85cb8b0ab17e94285acc39d3e46a21,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.81
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 928161499415252310, guid: ec85cb8b0ab17e94285acc39d3e46a21,
         type: 3}
@@ -21268,7 +21268,9 @@ MonoBehaviour:
   - {fileID: 1004026183}
   UseOldSystem: 0
   RoomStayChance: 0.66
-  StarsParticles: {fileID: 0}
+  levelId: HouseSmall
+  StarsParticles: {fileID: 2701886110523435087, guid: c1b8cd5d113bc0242949b534c69eb3d2,
+    type: 3}
 --- !u!114 &1701121649
 MonoBehaviour:
   m_ObjectHideFlags: 0
