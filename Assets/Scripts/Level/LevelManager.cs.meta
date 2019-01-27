@@ -3,7 +3,13 @@ guid: d6f5ea0e7f11fc947a57d31f1ed2536c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CameraRenderTexture: {fileID: 8400000, guid: 5c883d612d61dbc4099433e2dbb9c805,
+      type: 2}
+  - BigText: {instanceID: 0}
+  - CountdownText: {instanceID: 0}
+  - StarsParticles: {fileID: 2701886110523435087, guid: c1b8cd5d113bc0242949b534c69eb3d2,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
