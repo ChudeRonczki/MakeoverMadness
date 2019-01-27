@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
 
 	private void ChangeLevelSelection(int change)
 	{
-		m_levelIndex = (m_levelIndex + change) % m_levelsText.Length;
+		m_levelIndex = (m_levelIndex + m_levelsText.Length + change) % m_levelsText.Length;
 		m_buttons[0].m_textMesh.text = "< " + m_levelsText[m_levelIndex] + " >";
 	}
 
