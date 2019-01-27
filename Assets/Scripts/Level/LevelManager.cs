@@ -47,7 +47,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Material[] FurnitureTextures;
     private int[] MaterialIndexes = new int[18];
     private bool MaterialsInitialized = false;
-    
+    private bool endTriggered;
+
     private void Awake()
     {
         Instance = this;
@@ -98,7 +99,7 @@ public class LevelManager : MonoBehaviour
 
         AudioSource tickTockComponent = null;
         int seconds = GameLengthSeconds;
-        while (seconds > 0)
+        while (seconds > 0 && !endTriggered)
         {
             CountdownText.text = "" + seconds;
             seconds--;
@@ -631,6 +632,11 @@ public class LevelManager : MonoBehaviour
         {
             player.SkinnedRenderer.enabled = true;
         }
+    }
+
+    public void FinishLevel()
+    {
+        endTriggered = true;
     }
 }
 
