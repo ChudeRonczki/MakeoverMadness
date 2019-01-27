@@ -13,17 +13,19 @@ public class MenuButton : MonoBehaviour
 
 	public void Select()
 	{
-		m_animator?.SetTrigger(m_select);
+		m_animator.ResetTrigger(m_deselect);
+		m_animator.SetTrigger(m_select);
 	}
 
 	public void Click()
 	{
-		m_animator?.SetTrigger(m_click);
+		m_animator.SetTrigger(m_click);
 		m_clickEvent?.Invoke();
 	}
 
 	public void Deselect()
 	{
-		m_animator?.SetTrigger(m_deselect);
+		m_animator.ResetTrigger(m_select);
+		m_animator.SetTrigger(m_deselect);
 	}
 }

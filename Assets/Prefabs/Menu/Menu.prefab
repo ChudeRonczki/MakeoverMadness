@@ -151,6 +151,36 @@ PrefabInstance:
       propertyPath: m_clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1356045793685989330, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_text
+      value: Highscores
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20779f387e2bd441a7d761b9b87864e, type: 3}
 --- !u!4 &6272290058700084900 stripped
@@ -267,6 +297,38 @@ PrefabInstance:
         type: 3}
       propertyPath: m_clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356045793685989330, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_text
+      value: 'Exit
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20779f387e2bd441a7d761b9b87864e, type: 3}
@@ -385,6 +447,11 @@ PrefabInstance:
       propertyPath: m_clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1356045793685989330, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20779f387e2bd441a7d761b9b87864e, type: 3}
 --- !u!4 &8743348120216034094 stripped
@@ -501,6 +568,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1356045793685989330, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_text
+      value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 475501047558166744, guid: b20779f387e2bd441a7d761b9b87864e,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20779f387e2bd441a7d761b9b87864e, type: 3}
