@@ -38,6 +38,12 @@ public class ScoringSystem : MonoBehaviour
                 // Easy
                 float DistanceScore = 1f;
                 float AngleScore = 1f;
+
+                float angleRatio = Angle / MaxAngle;
+                if (angleRatio > 0.5f)
+                {
+                    AngleScore = 1f - (angleRatio - 0.5f) / 0.5f;
+                }
                 
                 // Fair
                 //float DistanceScore = 1f - Distance / MaxDistance;
