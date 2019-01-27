@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21405,6 +21405,9 @@ MonoBehaviour:
   tickTockClip: {fileID: 8300000, guid: 5aab37adc10d8264aa41d463d1812b65, type: 3}
   endClip: {fileID: 8300000, guid: 508b23600d2b62c4e908482827a4a434, type: 3}
   typeClip: {fileID: 8300000, guid: c8dcf01242efed34fae13fed55c3c268, type: 3}
+  FurnitureTextures:
+  - {fileID: 2100000, guid: 0908139ed59bc4c40a64dd832880ab74, type: 2}
+  - {fileID: 2100000, guid: 3ac1592d73f3ae247ad58e91abbaa7d4, type: 2}
 --- !u!114 &1701121649
 MonoBehaviour:
   m_ObjectHideFlags: 0

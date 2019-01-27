@@ -42,6 +42,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioClip tickTockClip;
     [SerializeField] private AudioClip endClip;
     [SerializeField] private AudioClip typeClip;
+
+    [SerializeField] private Material[] FurnitureTextures;
+    private int[] MaterialIndexes = new int[18];
+    private bool MaterialsInitialized = false;
     
     private void Awake()
     {
@@ -241,6 +245,15 @@ public class LevelManager : MonoBehaviour
     
     public void GenerateLevel(int seed = 0)
     {
+        if (FurnitureTextures.Length > 0)
+        {
+            for (int i = 0; i < MaterialIndexes.Length; i++)
+            {
+                MaterialIndexes[i] = Random.Range(0, FurnitureTextures.Length);
+            }
+            MaterialsInitialized = true;
+        }
+        
         GameObject[] LayoutSpaceObjects = GameObject.FindGameObjectsWithTag("EmptySpace");
         GameObject[] StartingSpaceObjects = GameObject.FindGameObjectsWithTag("StartingSpace");
         
@@ -501,6 +514,18 @@ public class LevelManager : MonoBehaviour
         for(int s = 0; s < children.Length; s++)
         {
             var child = children[s];
+
+            if (MaterialsInitialized)
+            {
+                var mr = child.GetComponent<MeshRenderer>();
+                var mats = mr.materials;
+                for (int m = 0; m < mats.Length; m++)
+                {
+                    mats[m] = FurnitureTextures[MaterialIndexes[child.ID]];
+                }
+                mr.materials = mats;
+            }
+            
             var Duplicate = Instantiate(child.gameObject, Vector3.zero, Quaternion.identity);
             Duplicate.transform.localScale = Vector3.one;
             scorings[s] = Duplicate.GetComponent<ScoringComponent>();
@@ -512,6 +537,8 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
+                bool found = false;
+                
                 for (int i = 0; i < SizeX; i++)
                 {
                     for (int j = 0; j < SizeZ; j++)
@@ -525,8 +552,15 @@ public class LevelManager : MonoBehaviour
                             Duplicate.transform.position = new Vector3(i + offset.x, 0f, j + offset.y);
                             i = SizeX;
                             j = SizeZ;
+                            found = true;
                         }
                     }
+                }
+
+                if (!found)
+                {
+                    Duplicate.transform.position = child.transform.position;
+                    Duplicate.transform.rotation = child.transform.rotation;
                 }
             }
         }
